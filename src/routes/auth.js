@@ -4,11 +4,15 @@ const {
 }               = require('../middlewares')
 const {
   signUpValidation,
-  logInValidation
+  logInValidation,
+  forgotPasswordValidation,
+  resetPasswordValidation
 }               = require('../validations')
 const {
   signUp,
-  logIn
+  logIn,
+  sendPasswordResetEmail,
+  resetPassword
 }               = require('../controllers/auth')
 
 router.route('/signup')
@@ -21,6 +25,18 @@ router.route('/login')
   .post(
     validate('body', logInValidation),
     logIn
+  )
+
+router.route('/forgot-password')
+  .post(
+    validate('body', forgotPasswordValidation),
+    sendPasswordResetEmail
+  )
+
+router.route('/reset-password/:token')
+  .patch(
+    validate('body', resetPasswordValidation),
+    resetPassword
   )
 
 module.exports = router

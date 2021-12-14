@@ -1,30 +1,40 @@
-const mongoose          = require('mongoose')
-const bcryptjs          = require('bcryptjs');
+const mongoose                    = require('mongoose')
+const bcryptjs                    = require('bcryptjs')
+const crypto                      = require('crypto')
+const {
+  createPasswordResetTokenHash
+}                                 = require('../utils/functions')
 
 const userSchema = new mongoose.Schema({
   email: {
-    type              : String,
-    lowercase         : true,
-    required          : true
+    type                      : String,
+    lowercase                 : true,
+    required                  : true
   },
 
   password: {
-    type              : String,
-    minlength         : 8,
-    select            : false,
-    required          : true
+    type                      : String,
+    minlength                 : 8,
+    select                    : false,
+    required                  : true
   },
 
   passwordConfirm: {
-    type              : String,
+    type                      : String,
     validate: {
       validator: function(v) {
         return v === this.password
       },
       message: _ => `Please provide the same password as the former.`
     },
-    required          : true
-  }
+    required                  : true
+  },
+
+  passwordResetToken          : String,
+
+  passwordResetTokenExpiresAt : Date,
+
+  passwordChangedAt           : Date
 }, {
   timestamps: true,
   versionKey: false
@@ -38,13 +48,26 @@ userSchema.methods.isPasswordEqualToHash = function(password, hash) {
   return bcryptjs.compare(password, hash)
 }
 
-userSchema.pre('save', async function(next) {
-  if ( !this.isDirectModified('password') ) {
-    next()
-  }
+userSchema.methods.setPasswordResetToken = function() {
+  const passwordResetToken          = crypto.randomBytes(32).toString('hex')
+  const passwordResetTokenHash      = createPasswordResetTokenHash(passwordResetToken)
 
-  this.password         = await bcryptjs.hash(this.password, 10)
-  this.passwordConfirm  = undefined
+  this.passwordResetToken           = passwordResetTokenHash
+  this.passwordResetTokenExpiresAt  = Date.now() + 10 * 60 * 1000;
+
+  return passwordResetToken
+}
+
+userSchema.pre('save', async function(next) {
+  if ( this.isDirectModified('password') ) {
+    this.password                     = await bcryptjs.hash(this.password, 10)
+    this.passwordChangedAt            = this.isNew ? undefined : Date.now() - 10
+    this.passwordConfirm              = undefined
+    this.passwordResetToken           = undefined
+    this.passwordResetTokenExpiresAt  = undefined
+
+    return next()
+  }
 
   next()
 })

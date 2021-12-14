@@ -1,0 +1,1 @@
+module.exports.PASSWORD_MIN = 8

@@ -1,13 +1,15 @@
 const { constructAppError } = require('../../utils/functions')
 
 function errorHandler(err, req, res, next) {
-  let error               = err
-  const isCastError       = err.code === 11000
-  const isValidationError = err.name === 'ValidationError'
+  let error                 = err
+  const isCastError         = err.code === 11000
+  const isValidationError   = err.name === 'ValidationError'
+  const isEmailSendingError = err.code === 'EAUTH'
 
   if (
     isCastError ||
-    isValidationError
+    isValidationError ||
+    isEmailSendingError
   ) {
     error = constructAppError(JSON.parse(JSON.stringify(err)));
   }

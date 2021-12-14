@@ -1,9 +1,13 @@
 const { 
   signUpValidation,
-  logInValidation
+  logInValidation,
+  forgotPasswordValidation,
+  resetPasswordValidation
 }                     = require('./auth')
 
 module.exports = {
   signUpValidation,
-  logInValidation
+  logInValidation,
+  forgotPasswordValidation,
+  resetPasswordValidation
 }

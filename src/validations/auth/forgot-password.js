@@ -10,6 +10,7 @@ const forgotPasswordValidation = Joi.object({
       'any.required': 'Email is a required field',
       'string.email': 'Email must be a valid email'
     })
+    
 })
 
 module.exports = forgotPasswordValidation

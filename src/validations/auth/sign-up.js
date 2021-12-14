@@ -1,4 +1,7 @@
-const Joi = require('joi')
+const Joi       = require('joi')
+const {
+  PASSWORD_MIN
+}               = require('../config')
 
 const signUpValidation = Joi.object({
   email: Joi
@@ -13,9 +16,11 @@ const signUpValidation = Joi.object({
 
   password: Joi
     .string()
+    .min(PASSWORD_MIN)
     .required()
     .messages({
-      'any.required': 'Password is a required field.'
+      'any.required': 'Password is a required field.',
+      'string.min': 'Password should be at least 8 character long.'
     }),
 
   passwordConfirm: Joi

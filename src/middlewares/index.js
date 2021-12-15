@@ -4,8 +4,14 @@ const {
 const {
   errorHandler
 }           = require('./error')
+const {
+  verifyAuth
+}           = require('./auth')
 
 module.exports = {
   validate,
-  errorHandler
+
+  errorHandler,
+  
+  verifyAuth
 }

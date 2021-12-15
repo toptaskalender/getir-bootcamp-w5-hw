@@ -1,15 +1,17 @@
 const Joi       = require('joi')
 const {
-  PASSWORD_MIN
+  USER_PASSWORD_MIN
 }               = require('../config')
 
 const resetPasswordValidation = Joi.object({
   password: Joi
     .string()
-    .min(PASSWORD_MIN)
+    .min(USER_PASSWORD_MIN)
     .required()
     .messages({
-      'any.required': 'Password is a required field.'
+      'string.min'    : `Password must be at least ${USER_PASSWORD_MIN} character long.`,
+      'string.base'   : 'Password must be a string.',
+      'any.required'  : 'Password is a required field.'
     }),
 
   passwordConfirm: Joi

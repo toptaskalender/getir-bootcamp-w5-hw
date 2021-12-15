@@ -11,8 +11,9 @@ const createUserValidation = Joi.object({
     .lowercase()
     .required()
     .messages({
-      'any.required': 'Email is a required field.',
-      'string.email': 'Email must be a valid email.'
+      'any.required'  : 'Email is a required field.',
+      'string.base'   : 'Email must be a string.',
+      'string.email'  : 'Email must be a valid email.'
     }),
 
   password: Joi
@@ -20,9 +21,9 @@ const createUserValidation = Joi.object({
     .min(USER_PASSWORD_MIN)
     .required()
     .messages({
-      'any.required': 'Password is a required field.',
-      'any.only'    : 'Password confirm must be equal to password.',
-      'string.min'  : `Password should be at least ${USER_PASSWORD_MIN} character long.`
+      'string.min'    : `Password must be at least ${USER_PASSWORD_MIN} character long.`,
+      'string.base'   : 'Password must be a string.',
+      'any.required'  : 'Password is a required field.',
     }),
 
   passwordConfirm: Joi
@@ -32,6 +33,9 @@ const createUserValidation = Joi.object({
     .string()
     .valid(...USER_ROLES)
     .default('user')
+    .messages({
+      'string.base'   : 'Role must be a string.',
+    }),
     
 })
   .with('password', 'passwordConfirm')

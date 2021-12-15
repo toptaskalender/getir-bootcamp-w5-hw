@@ -1,6 +1,6 @@
 const Joi       = require('joi')
 const {
-  PASSWORD_MIN
+  USER_PASSWORD_MIN
 }               = require('../config')
 
 const signUpValidation = Joi.object({
@@ -10,17 +10,19 @@ const signUpValidation = Joi.object({
     .lowercase()
     .required()
     .messages({
-      'any.required': 'Email is a required field.',
-      'string.email': 'Email must be a valid email.'
+      'string.email'  : 'Email must be a valid email.',
+      'string.base'   : 'Email must be a string.',
+      'any.required'  : 'Email is a required field.'
     }),
 
   password: Joi
     .string()
-    .min(PASSWORD_MIN)
+    .min(USER_PASSWORD_MIN)
     .required()
     .messages({
-      'any.required': 'Password is a required field.',
-      'string.min': 'Password should be at least 8 character long.'
+      'string.min'    : `Password must be at least ${USER_PASSWORD_MIN} character long.`,
+      'string.base'   : 'Password must be a string.',
+      'any.required'  : 'Password is a required field.'
     }),
 
   passwordConfirm: Joi

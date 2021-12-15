@@ -7,15 +7,17 @@ const logInValidation = Joi.object({
     .lowercase()
     .required()
     .messages({
-      'any.required': 'Email is a required field',
-      'string.email': 'Email must be a valid email'
+      'string.email'  : 'Email must be a valid email',
+      'string.base'   : 'Email must be a string.',
+      'any.required'  : 'Email is a required field'
     }),
 
   password: Joi
     .string()
     .required()
     .messages({
-      'any.required': 'Password is a required field'
+      'string.base'   : 'Password must be a string.',
+      'any.required'  : 'Password is a required field'
     }),
 
 })

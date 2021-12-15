@@ -39,7 +39,7 @@ const createProductValidation = Joi.object({
     .required()
     .messages({
       'string.base'   : 'Product unit price currency must be a string.',
-      'any.only'      : `Product unit price currency must be either ${PRODUCT_CURRENCIES.join(', ')}.`,
+      'any.only'      : `Product unit price currency must be either ${PRODUCT_CURRENCIES.join(', ')}.`
     })
   
 })

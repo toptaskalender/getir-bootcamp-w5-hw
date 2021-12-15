@@ -7,6 +7,9 @@ const {
 const {
   createUserValidation
 }                           = require('./user')
+const {
+  createProductValidation
+}                           = require('./product')
 
 module.exports = {
   signUpValidation,
@@ -14,5 +17,7 @@ module.exports = {
   forgotPasswordValidation,
   resetPasswordValidation,
 
-  createUserValidation
+  createUserValidation,
+  
+  createProductValidation
 }

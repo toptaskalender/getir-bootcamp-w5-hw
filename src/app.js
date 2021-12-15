@@ -1,9 +1,11 @@
 const express     = require('express')
 const {
-  authRouter
+  authRouter,
+  usersRouter
 }                 = require('./routes')
 const {
-  errorHandler
+  errorHandler,
+  verifyAuth
 }                 = require('./middlewares')
 const {
   AppError
@@ -13,6 +15,11 @@ const app = express()
 
 app.use(express.json())
 app.use('/api/v1', authRouter)
+app.use(
+  '/api/v1/users',
+  verifyAuth,
+  usersRouter
+)
 
 app.all('*', (req, res, next) => {
   return next(new AppError(500, `${req.originalUrl} does not exist on our server.`))

@@ -58,6 +58,13 @@ userSchema.methods.setPasswordResetToken = function() {
   return passwordResetToken
 }
 
+userSchema.methods.isPasswordChangedAfterTokenIssued = function(issuedAt) {
+  const issuedAtInSec         = issuedAt * 1000
+  const passwordChangeAtInSec = new Date(this.passwordChangedAt).getTime()
+
+  return passwordChangeAtInSec > issuedAtInSec
+}
+
 userSchema.pre('save', async function(next) {
   if ( this.isDirectModified('password') ) {
     this.password                     = await bcryptjs.hash(this.password, 10)

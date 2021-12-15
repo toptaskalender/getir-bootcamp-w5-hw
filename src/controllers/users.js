@@ -1,4 +1,7 @@
 const {
+  createOne
+}             = require('./base')
+const {
   userService
 }             = require('../services')
 const {
@@ -21,18 +24,7 @@ const getMe = catchAsync(async (req, res, next) => {
   })
 })
 
-const createUser = catchAsync(async (req, res, next) => {
-  const { body: data }  = req
-
-  const user = await userService.create(data)
-
-  res.status(201).json({
-    status: 'success',
-    data: {
-      data: user
-    }
-  })
-})
+const createUser = createOne(userService)
 
 module.exports = {
   getMe,

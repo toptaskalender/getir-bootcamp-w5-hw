@@ -3,11 +3,16 @@ const {
   logInValidation,
   forgotPasswordValidation,
   resetPasswordValidation
-}                     = require('./auth')
+}                           = require('./auth')
+const {
+  createUserValidation
+}                           = require('./user')
 
 module.exports = {
   signUpValidation,
   logInValidation,
   forgotPasswordValidation,
-  resetPasswordValidation
+  resetPasswordValidation,
+
+  createUserValidation
 }

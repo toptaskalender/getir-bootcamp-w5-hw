@@ -5,7 +5,8 @@ const {
   errorHandler
 }           = require('./error')
 const {
-  verifyAuth
+  verifyAuth,
+  restrictTo
 }           = require('./auth')
 
 module.exports = {
@@ -13,5 +14,6 @@ module.exports = {
 
   errorHandler,
   
-  verifyAuth
+  verifyAuth,
+  restrictTo
 }

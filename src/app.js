@@ -1,11 +1,13 @@
 const express         = require('express')
+const path            = require('path')
 const morgan          = require('morgan')
 const {
   resLogWriteStream
 }                     = require('./logs')
 const {
   authRouter,
-  usersRouter
+  usersRouter,
+  productsRouter
 }                     = require('./routes')
 const {
   errorHandler,
@@ -18,17 +20,15 @@ const {
 const app = express()
 
 app.use(express.json())
+app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(morgan('combined', { stream: resLogWriteStream }))
 
 app.use('/api/v1', authRouter)
-app.use(
-  '/api/v1/users',
-  verifyAuth,
-  usersRouter
-)
+app.use('/api/v1/users', verifyAuth, usersRouter)
+app.use('/api/v1/products', productsRouter)
 
-app.all('*', (req, res, next) => {
-  return next(new AppError(500, `${req.originalUrl} does not exist on our server.`))
+app.all('*', (req, _) => {
+  throw new AppError(500, `${req.originalUrl} does not exist on our server.`)
 })
 
 app.use(errorHandler)

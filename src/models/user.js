@@ -2,21 +2,25 @@ const mongoose                    = require('mongoose')
 const bcryptjs                    = require('bcryptjs')
 const crypto                      = require('crypto')
 const {
+  USER_ROLES,
+  USER_PASSWORD_MIN
+}                                 = require('../validations/config')
+const {
   createPasswordResetTokenHash
 }                                 = require('../utils/functions')
 
 const userSchema = new mongoose.Schema({
   email: {
     type                      : String,
-    lowercase                 : true,
+    lowercase                 : [true, 'A user must have an email.'],
     required                  : true
   },
 
   password: {
     type                      : String,
-    minlength                 : 8,
+    minlength                 : [USER_PASSWORD_MIN, `A user's password must be at least ${USER_PASSWORD_MIN} characters long.`],
     select                    : false,
-    required                  : true
+    required                  : [true, 'A user must have an password.']
   },
 
   passwordConfirm: {
@@ -34,8 +38,8 @@ const userSchema = new mongoose.Schema({
     type                      : String,
     default                   : 'user',
     enum: {
-      values                  : ['user', 'admin'],
-      message                 : 'A user\'s role must be either user or admin.'
+      values                  : USER_ROLES,
+      message                 : `A user's role must be either ${USER_ROLES.join(' ')}.`
     }   
   },
 

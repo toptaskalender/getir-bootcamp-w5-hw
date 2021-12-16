@@ -1,19 +1,22 @@
-const router    = require('express').Router()
+const router      = require('express').Router()
 const {
+  verifyAuth,
   validate
-}               = require('../middlewares')
+}                 = require('../middlewares')
 const {
   signUpValidation,
   logInValidation,
   forgotPasswordValidation,
-  resetPasswordValidation
-}               = require('../validations')
+  resetPasswordValidation,
+  updatePasswordValidation
+}                 = require('../validations')
 const {
   signUp,
   logIn,
   sendPasswordResetEmail,
-  resetPassword
-}               = require('../controllers/auth')
+  resetPassword,
+  updatePassword
+}                 = require('../controllers/auth')
 
 router.route('/signup')
   .post(
@@ -37,6 +40,13 @@ router.route('/reset-password/:token')
   .patch(
     validate('body', resetPasswordValidation),
     resetPassword
+  )
+
+router.route('/update-password')
+  .patch(
+    verifyAuth,
+    validate('body', updatePasswordValidation),
+    updatePassword
   )
 
 module.exports = router

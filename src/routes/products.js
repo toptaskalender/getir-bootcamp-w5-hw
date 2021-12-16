@@ -5,11 +5,15 @@ const {
   validate
 }                   = require('../middlewares')
 const {
-  createProductValidation
+  createProductValidation,
+  updateProductValidation
 }                   = require('../validations')
 const {
   getProducts,
-  createProduct
+  getProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct
 }                   = require('../controllers/products')
 
 router.route('/')
@@ -21,6 +25,22 @@ router.route('/')
     restrictTo('admin'),
     validate('body', createProductValidation),
     createProduct
+  )
+
+router.route('/:id')
+  .get(
+    getProduct
+  )
+  .patch(
+    verifyAuth,
+    restrictTo('admin'),
+    validate('body', updateProductValidation),
+    updateProduct
+  )
+  .delete(
+    verifyAuth,
+    restrictTo('admin'),
+    deleteProduct
   )
 
 module.exports = router

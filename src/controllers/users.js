@@ -1,5 +1,9 @@
 const {
-  createOne
+  getAll,
+  getOne,
+  createOne,
+  updateOne,
+  deleteOne
 }             = require('./base')
 const {
   userService
@@ -24,9 +28,17 @@ const getMe = catchAsync(async (req, res, next) => {
   })
 })
 
-const createUser = createOne(userService)
+const getUsers    = getAll(userService)
+const getUser     = getOne(userService)
+const createUser  = createOne(userService)
+const updateUser  = updateOne(userService)
+const deleteUser  = deleteOne(userService)
 
 module.exports = {
   getMe,
-  createUser
+  getUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser
 }

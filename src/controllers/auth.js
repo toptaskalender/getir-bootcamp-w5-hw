@@ -53,11 +53,9 @@ const sendPasswordResetEmail = catchAsync(async (req, res, next) => {
 
   const user = await authService.findOne({ email })
   
-  if (!user) {
-    return next(new AppError(400, 'Cannot find a user with this email. Please provide correct a correct one.'))
-  }
+  if (!user) return next(new AppError(400, 'Cannot find a user with this email. Please provide correct a correct one.'))
 
-  const passwordResetToken  = user.setPasswordResetToken()
+  const passwordResetToken = user.setPasswordResetToken()
 
   await sendEmail({ req, email, passwordResetToken })
   await user.save({ validateBeforeSave: false })
@@ -82,10 +80,8 @@ const resetPassword = catchAsync(async (req, res, next) => {
     passwordResetTokenExpiresAt: { $gte: Date.now() }
   })
   
-  if (!user) {
-    return next(new AppError(400, 'Malformed password reset token.')) 
-  }
-
+  if (!user) return next(new AppError(400, 'Malformed password reset token.')) 
+  
   user.password         = password
   user.passwordConfirm  = passwordConfirm
   user = await user.save()
@@ -101,9 +97,38 @@ const resetPassword = catchAsync(async (req, res, next) => {
   })
 })
 
+const updatePassword = catchAsync(async (req, res, next) => {
+  const { id }    = req.user
+  const {
+    currentPassword,
+    password,
+    passwordConfirm
+  }               = req.body
+
+  let user = await authService.findById(id, '+password')
+  
+  if (!user.isPasswordEqualToHash(currentPassword, user.password)) {
+    return next(new AppError(400, 'Current password is not correct. Please provide correct information.'))
+  }
+
+  user.password         = password
+  user.passwordConfirm  = passwordConfirm
+  user                  = await user.save()
+  const jwt             = signToken(user.id)
+
+  res.status(200).json({
+    status: 'success',
+    token: jwt,
+    data: {
+      data: user
+    }
+  })
+})
+
 module.exports = {
   signUp,
   logIn,
   sendPasswordResetEmail,
-  resetPassword
+  resetPassword,
+  updatePassword
 }

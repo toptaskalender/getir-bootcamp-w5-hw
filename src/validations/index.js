@@ -2,13 +2,16 @@ const {
   signUpValidation,
   logInValidation,
   forgotPasswordValidation,
-  resetPasswordValidation
+  resetPasswordValidation,
+  updatePasswordValidation
 }                           = require('./auth')
 const {
-  createUserValidation
+  createUserValidation,
+  updateUserValidation
 }                           = require('./user')
 const {
-  createProductValidation
+  createProductValidation,
+  updateProductValidation
 }                           = require('./product')
 
 module.exports = {
@@ -16,8 +19,11 @@ module.exports = {
   logInValidation,
   forgotPasswordValidation,
   resetPasswordValidation,
+  updatePasswordValidation,
 
   createUserValidation,
+  updateUserValidation,
   
-  createProductValidation
+  createProductValidation,
+  updateProductValidation
 }

@@ -1,28 +1,24 @@
 const {
-  createOne
+  getAll,
+  getOne,
+  createOne,
+  updateOne,
+  deleteOne
 }                 = require('./base')
 const {
   productService
 }                 = require('../services')
-const {
-  catchAsync
-}                 = require('../utils/functions')
 
-const getProducts = catchAsync(async (req, res, next) => {
-  const products = await productService.find()
-
-  res.status(200).json({
-    status: 'success',
-    results: products.length,
-    data: {
-      data: products
-    }
-  })
-})
-
+const getProducts   = getAll(productService)
+const getProduct    = getOne(productService)
 const createProduct = createOne(productService)
+const updateProduct = updateOne(productService)
+const deleteProduct = deleteOne(productService)
 
 module.exports = {
   getProducts,
-  createProduct
+  getProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct
 }

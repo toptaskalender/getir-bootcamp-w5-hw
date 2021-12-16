@@ -1,6 +1,41 @@
 const {
   catchAsync
-}                   = require('../utils/functions')
+}                 = require('../utils/functions')
+const {
+  AppError
+}                 = require('../utils/classes')
+
+function getAll(service) {
+  return catchAsync(async (req, res, next) => {
+    const docs = await service.find()
+
+    res.status(200).json({
+      status: 'success',
+      results: docs.length,
+      data: {
+        data: docs
+      }
+    })
+  })
+}
+
+function getOne(service){
+  return catchAsync(async (req, res, next) => {
+    console.log('req.params => ', req.params)
+    const { id } = req.params
+
+    const doc = await service.findById(id)
+
+    if (!doc) return next(new AppError(400, 'Cannot find a document with this id. Please provide correct information.'))
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: doc
+      }
+    })
+  })
+}
 
 function createOne(service) {
   return catchAsync(async (req, res, next) => {
@@ -17,6 +52,43 @@ function createOne(service) {
   })
 }
 
+function updateOne(service) {
+  return catchAsync(async (req, res, next) => {
+    const { id }         = req.params
+    const { body: data}  = req
+
+    const doc = await service.findByIdAndUpdate(id, data)
+
+    if (!doc) return next(new AppError(400, 'Cannot find a document with this id. Please provide correct information.'))
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: doc
+      }
+    })
+  })
+}
+
+function deleteOne(service) {
+  return catchAsync(async (req, res, next) => {
+    const { id } = req.params
+
+    const doc = await service.findByIdAndDelete(id)
+
+    if (!doc) return next(new AppError(400, 'Cannot find a document with this id. Please provide correct information.'))
+
+    res.status(204).json({
+      status: 'success',
+      data: null
+    })
+  })
+}
+
 module.exports = {
-  createOne
+  getAll,
+  getOne,
+  createOne,
+  updateOne,
+  deleteOne
 }

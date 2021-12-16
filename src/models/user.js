@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
       },
       message: _ => `Please provide the same password as the former.`
     },
-    required                  : true
+    required                  : [true, 'A user must confirm his password.']
   },
 
   role: {
@@ -82,7 +82,7 @@ userSchema.methods.isPasswordChangedAfterTokenIssued = function(issuedAt) {
 userSchema.pre('save', async function(next) {
   if ( this.isDirectModified('password') ) {
     this.password                     = await bcryptjs.hash(this.password, 10)
-    this.passwordChangedAt            = this.isNew ? undefined : Date.now() - 10
+    this.passwordChangedAt            = this.isNew ? undefined : Date.now() - 1000
     this.passwordConfirm              = undefined
     this.passwordResetToken           = undefined
     this.passwordResetTokenExpiresAt  = undefined

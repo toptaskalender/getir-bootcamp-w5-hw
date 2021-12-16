@@ -21,7 +21,6 @@ function getAll(service) {
 
 function getOne(service){
   return catchAsync(async (req, res, next) => {
-    console.log('req.params => ', req.params)
     const { id } = req.params
 
     const doc = await service.findById(id)

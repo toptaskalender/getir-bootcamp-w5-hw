@@ -1,8 +1,11 @@
-const Joi       = require('joi')
+const Joi               = require('joi')
 const {
   USER_PASSWORD_MIN,
   USER_ROLES
-}               = require('../config')
+}                       = require('../config')
+const {
+  createMessages
+}                       = require('../../utils/functions')
 
 const createUserValidation = Joi.object({
   email: Joi
@@ -10,21 +13,31 @@ const createUserValidation = Joi.object({
     .email()
     .lowercase()
     .required()
-    .messages({
-      'any.required'  : 'Email is a required field.',
-      'string.base'   : 'Email must be a string.',
-      'string.email'  : 'Email must be a valid email.'
-    }),
+    .messages(
+      createMessages(
+        'Email',
+        {
+          string  : true,
+          email   : true,
+          required: true
+        }
+      )
+    ),
 
   password: Joi
     .string()
     .min(USER_PASSWORD_MIN)
     .required()
-    .messages({
-      'string.min'    : `Password must be at least ${USER_PASSWORD_MIN} character long.`,
-      'string.base'   : 'Password must be a string.',
-      'any.required'  : 'Password is a required field.',
-    }),
+    .messages(
+      createMessages(
+        'Password',
+        {
+          string    : true,
+          stringMin : true,
+          required  : true,
+        }
+      )
+    ),
 
   passwordConfirm: Joi
     .ref('password'),
@@ -33,9 +46,14 @@ const createUserValidation = Joi.object({
     .string()
     .valid(...USER_ROLES)
     .default('user')
-    .messages({
-      'string.base'   : 'Role must be a string.',
-    }),
+    .messages(
+      createMessages(
+        'Role',
+        {
+          string: true
+        }
+      )
+    ),
     
 })
   .with('password', 'passwordConfirm')

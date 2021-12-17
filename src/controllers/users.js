@@ -45,6 +45,25 @@ const createAddress = catchAsync(async (req, res, next) => {
   })
 })
 
+const deleteAddress = catchAsync(async (req, res, next) => {
+  const { id }            = req.user
+  const { id: addressId } = req.params
+
+  const beforeUpdate      = await userService.findById(id)
+  const user              = await userService.findByIdAndUpdate(id, { $pull: { addresses: { _id: addressId } } })
+  const isAddressDeleted  = beforeUpdate.addresses.length !== user.addresses.length
+
+  if (!user) return next(new AppError(400, 'Cannot find a user with this id.'))
+  if (!isAddressDeleted) return next(new AppError(400, 'Cannot find an address with this id.'))
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: user 
+    }
+  })
+})
+
 const getUsers    = getAll(userService)
 const getUser     = getOne(userService)
 const createUser  = createOne(userService)
@@ -54,6 +73,7 @@ const deleteUser  = deleteOne(userService)
 module.exports = {
   getMe,
   createAddress,
+  deleteAddress,
   getUsers,
   getUser,
   createUser,

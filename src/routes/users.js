@@ -11,6 +11,8 @@ const {
 const {
   getMe,
   createAddress,
+  deleteAddress,
+
   getUsers,
   getUser,
   createUser,
@@ -25,6 +27,11 @@ router.route('/me/addresses')
   .post(
     validate('body', createAddressValidation),
     createAddress
+  )
+
+router.route('/me/addresses/:id')
+  .delete(
+    deleteAddress
   )
 
 router.route('/')

@@ -16,14 +16,14 @@ class BaseService {
   }
 
   async findByIdAndUpdate(id, data) {
-    return this.model.findByIdAndUpdate(id, data, {new: true, runValidators: true});
+    return this.model.findByIdAndUpdate(id, data, {new: true, runValidators: true})
   }
 
   async findByIdAndDelete(id) {
-    return this.model.findByIdAndDelete(id);
+    return this.model.findByIdAndDelete(id)
   }
 
-  async find(filterBy = {}, sortBy, fieldBy, skip, limit) {
+  async find({ filterBy, sortBy, fieldBy, skip, limit }) {
     let query = this.model.find(filterBy)
 
     if (sortBy) {
@@ -33,20 +33,15 @@ class BaseService {
     }
 
     if (fieldBy) {
-      query = query.select(fieldBy);
+      query = query.select(fieldBy)
     }
     
     {
-      query = query.skip(skip).limit(limit);
+      query = query.skip(skip).limit(limit)
     }
     
-    return query;
-  }
-  
-  async countDocuments() {
-    const amountOfDocs = await this.model.countDocuments();
-    return amountOfDocs;
+    return query
   }
 }
 
-module.exports = BaseService;
+module.exports = BaseService

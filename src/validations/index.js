@@ -7,7 +7,8 @@ const {
 }                           = require('./auth')
 const {
   createUserValidation,
-  updateUserValidation
+  updateUserValidation,
+  createAddressValidation
 }                           = require('./user')
 const {
   createProductValidation,
@@ -23,6 +24,7 @@ module.exports = {
 
   createUserValidation,
   updateUserValidation,
+  createAddressValidation,
   
   createProductValidation,
   updateProductValidation

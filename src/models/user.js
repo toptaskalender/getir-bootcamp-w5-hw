@@ -43,6 +43,15 @@ const userSchema = new mongoose.Schema({
     }   
   },
 
+  addresses: [{
+    label                     : String,
+    street                    : String,
+    city                      : String,
+    province                  : String,
+    zip                       : Number,
+    country                   : String
+  }],
+
   passwordResetToken          : String,
 
   passwordResetTokenExpiresAt : Date,

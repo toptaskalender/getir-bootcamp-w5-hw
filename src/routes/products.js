@@ -1,8 +1,10 @@
-const path          = require('path')
 const multer        = require('multer')
 const router        = require('express').Router()
-const storage       = require('../config/storage')
-const upload        = multer({ storage })
+const {
+  storage,
+  fileFilter
+}                   = require('../config/multer')
+const upload        = multer({ storage, fileFilter })
 const {
   verifyAuth,
   restrictTo,

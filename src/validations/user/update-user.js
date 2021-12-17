@@ -3,21 +3,14 @@ const {
   USER_ROLES
 }                 = require('../config')
 const {
-  createMessages
+  createErrors
 }                 = require('../../utils/functions')
 
 const updateUserValidation = Joi.object({
   role: Joi
     .string()
     .valid(...USER_ROLES)
-    .messages(
-      createMessages(
-        'Role',
-        {
-          string: true
-        }
-      )
-    ),
+    .error(createErrors)
     
 })
 

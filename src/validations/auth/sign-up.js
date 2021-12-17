@@ -2,6 +2,9 @@ const Joi       = require('joi')
 const {
   USER_PASSWORD_MIN
 }               = require('../config')
+const {
+  createErrors
+}               = require('../../utils/functions')
 
 const signUpValidation = Joi.object({
   email: Joi
@@ -9,26 +12,19 @@ const signUpValidation = Joi.object({
     .email()
     .lowercase()
     .required()
-    .messages({
-      'string.email'  : 'Email must be a valid email.',
-      'string.base'   : 'Email must be a string.',
-      'any.required'  : 'Email is a required field.'
-    }),
+    .error(createErrors),
 
   password: Joi
     .string()
     .min(USER_PASSWORD_MIN)
     .required()
-    .messages({
-      'string.min'    : `Password must be at least ${USER_PASSWORD_MIN} character long.`,
-      'string.base'   : 'Password must be a string.',
-      'any.required'  : 'Password is a required field.'
-    }),
+    .error(createErrors),
 
   passwordConfirm: Joi
     .ref('password')
     
 })
   .with('password', 'passwordConfirm')
+  .error(createErrors)
 
 module.exports = signUpValidation

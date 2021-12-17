@@ -1,4 +1,5 @@
-const Joi = require('joi')
+const Joi               = require('joi')
+const { createErrors }  = require('../../utils/functions')
 
 const forgotPasswordValidation = Joi.object({
   email: Joi
@@ -6,11 +7,7 @@ const forgotPasswordValidation = Joi.object({
     .email()
     .lowercase()
     .required()
-    .messages({
-      'string.base'   : 'Email must be a string.',
-      'string.email'  : 'Email must be a valid email',
-      'any.required'  : 'Email is a required field'
-    })
+    .error(createErrors)
     
 })
 

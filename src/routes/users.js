@@ -5,10 +5,12 @@ const {
 }             = require('../middlewares')
 const {
   createUserValidation,
-  updateUserValidation
+  updateUserValidation,
+  createAddressValidation
 }             = require('../validations')
 const {
   getMe,
+  createAddress,
   getUsers,
   getUser,
   createUser,
@@ -18,6 +20,12 @@ const {
 
 router.route('/me')
   .get(getMe)
+
+router.route('/me/addresses')
+  .post(
+    validate('body', createAddressValidation),
+    createAddress
+  )
 
 router.route('/')
   .get(

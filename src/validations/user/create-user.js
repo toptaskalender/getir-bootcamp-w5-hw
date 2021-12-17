@@ -1,11 +1,11 @@
-const Joi               = require('joi')
+const Joi           = require('joi')
 const {
   USER_PASSWORD_MIN,
   USER_ROLES
-}                       = require('../config')
+}                   = require('../config')
 const {
-  createMessages
-}                       = require('../../utils/functions')
+  createErrors
+}                   = require('../../utils/functions')
 
 const createUserValidation = Joi.object({
   email: Joi
@@ -13,31 +13,13 @@ const createUserValidation = Joi.object({
     .email()
     .lowercase()
     .required()
-    .messages(
-      createMessages(
-        'Email',
-        {
-          string  : true,
-          email   : true,
-          required: true
-        }
-      )
-    ),
+    .error(createErrors),
 
   password: Joi
     .string()
     .min(USER_PASSWORD_MIN)
     .required()
-    .messages(
-      createMessages(
-        'Password',
-        {
-          string    : true,
-          stringMin : true,
-          required  : true,
-        }
-      )
-    ),
+    .error(createErrors),
 
   passwordConfirm: Joi
     .ref('password'),
@@ -46,16 +28,10 @@ const createUserValidation = Joi.object({
     .string()
     .valid(...USER_ROLES)
     .default('user')
-    .messages(
-      createMessages(
-        'Role',
-        {
-          string: true
-        }
-      )
-    ),
+    .error(createErrors)
     
 })
   .with('password', 'passwordConfirm')
-
+  .error(createErrors)
+  
 module.exports = createUserValidation

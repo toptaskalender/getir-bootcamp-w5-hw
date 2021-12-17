@@ -19,9 +19,11 @@ const {
 
 const app = express()
 
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(morgan('combined', { stream: resLogWriteStream }))
+
+app.use('/static', express.static(path.join(__dirname, 'public')))
 
 app.use('/api/v1', authRouter)
 app.use('/api/v1/users', verifyAuth, usersRouter)

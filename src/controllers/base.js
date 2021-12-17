@@ -2,12 +2,17 @@ const {
   catchAsync
 }                 = require('../utils/functions')
 const {
-  AppError
+  AppError,
+  APIFeatures
 }                 = require('../utils/classes')
 
 function getAll(service) {
-  return catchAsync(async (req, res, next) => {
-    const docs = await service.find()
+  return catchAsync(async (req, res) => {
+    const { query } = req
+    const features  = new APIFeatures(query)
+
+    const queries   = features.createQuery()
+    const docs      = await service.find(queries)
 
     res.status(200).json({
       status: 'success',

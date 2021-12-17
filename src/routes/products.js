@@ -1,4 +1,8 @@
+const path          = require('path')
+const multer        = require('multer')
 const router        = require('express').Router()
+const storage       = require('../config/storage')
+const upload        = multer({ storage })
 const {
   verifyAuth,
   restrictTo,
@@ -13,7 +17,8 @@ const {
   getProduct,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  uploadImage
 }                   = require('../controllers/products')
 
 router.route('/')
@@ -41,6 +46,14 @@ router.route('/:id')
     verifyAuth,
     restrictTo('admin'),
     deleteProduct
+  )
+
+router.route('/:id/image')
+  .patch(
+    verifyAuth,
+    restrictTo('admin'),
+    upload.single('image'),
+    uploadImage
   )
 
 module.exports = router

@@ -19,9 +19,18 @@ const updateProduct = updateOne(productService)
 const deleteProduct = deleteOne(productService)
 
 const uploadImage = catchAsync(async (req, res, next) => {
+  const { id }                = req.params
+  const { filename: image }   = req.file
+
+  const doc = await productService.findByIdAndUpdate(id, { image })
+
+  if (!doc) return next(new AppError(400, 'Cannot find a document with this id. Please provide correct information.'))
+
   res.status(200).json({
     status: 'success',
-    message: 'File upload was successful.'
+    data: {
+      data: doc
+    }
   })
 })
 

@@ -5,6 +5,7 @@ const signToken                     = require('./sign-token')
 const sendEmail                     = require('./send-email')
 const createPasswordResetTokenHash  = require('./create-password-reset-token-hash')
 const verifyToken                   = require('./verify-token')
+const createErrors                  = require('./create-errors')
 
 module.exports = {
   constructDataFromReq,
@@ -13,5 +14,6 @@ module.exports = {
   signToken,
   sendEmail,
   createPasswordResetTokenHash,
-  verifyToken
+  verifyToken,
+  createErrors
 }

@@ -53,7 +53,7 @@ const sendPasswordResetEmail = catchAsync(async (req, res, next) => {
 
   const user = await authService.findOne({ email })
   
-  if (!user) return next(new AppError(400, 'Cannot find a user with this email. Please provide correct a correct one.'))
+  if (!user) return next(new AppError(400, 'Cannot find a user with this email. Please provide correct information.'))
 
   const passwordResetToken = user.setPasswordResetToken()
 

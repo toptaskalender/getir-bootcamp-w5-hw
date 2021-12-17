@@ -11,6 +11,10 @@ function createErrors(errors) {
       case 'any.only':
         err.message = `${field.label} must be either ${field.valids.join(', ')}.`
         break
+
+      case 'string.base':
+        err.message = `${field.label} must be a string.`
+        break
       case 'string.empty':
         err.message = `${field.label} cannot be empty.`
         break
@@ -20,6 +24,11 @@ function createErrors(errors) {
       case 'string.min':
         err.message = `${field.label} must be at least ${field.limit} character long.`
         break
+
+      case 'number.base':
+        err.message = `${field.label} must be a number.`
+        break
+
       case 'object.with':
         err.message = `${field.main} must be provided with ${field.peer}.`
         break

@@ -8,7 +8,9 @@ const {
 const {
   createUserValidation,
   updateUserValidation,
-  createAddressValidation
+
+  createAddressValidation,
+  updateAddressValidation
 }                           = require('./user')
 const {
   createProductValidation,
@@ -24,7 +26,9 @@ module.exports = {
 
   createUserValidation,
   updateUserValidation,
+
   createAddressValidation,
+  updateAddressValidation,
   
   createProductValidation,
   updateProductValidation

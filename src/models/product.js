@@ -59,7 +59,7 @@ const productSchema = new mongoose.Schema({
     type                      : String,
     enum: {
       values                  : PRODUCT_ENTITY_AMOUNT_UNITS,
-      message                 : `A product's currenct must be either ${PRODUCT_ENTITY_PRICE_CURRENCIES.join(', ')}.`
+      message                 : `A product's currenct must be either ${PRODUCT_ENTITY_AMOUNT_UNITS.join(', ')}.`
     },
     required                  : [true, `A product must have an entity amount unit.`],
   }

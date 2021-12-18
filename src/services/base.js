@@ -11,6 +11,10 @@ class BaseService {
     return this.model.findOne(findBy).select(fieldBy)
   }
 
+  async findOneAndUpdate(findBy, data) {
+    return this.model.findOneAndUpdate(findBy, data, {new: true, runValidators: true})
+  }
+
   async findById(id, fieldBy) {
     return this.model.findById(id).select(fieldBy)
   }

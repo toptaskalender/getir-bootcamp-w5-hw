@@ -1,9 +1,10 @@
 const mongoose                  = require('mongoose')
 const {
   PRODUCT_CATEGORIES,
-  PRODUCT_DEFAULT_UNIT_PRICE_CURRENCY,
-  PRODUCT_CURRENCIES,
-
+  PRODUCT_SUB_CATEGORIES,
+  PRODUCT_DEFAULT_ENTITY_PRICE_CURRENCY,
+  PRODUCT_ENTITY_PRICE_CURRENCIES,
+  PRODUCT_ENTITY_AMOUNT_UNITS
 }                               = require('../validations/config')
 
 const productSchema = new mongoose.Schema({
@@ -18,25 +19,49 @@ const productSchema = new mongoose.Schema({
       values                  : PRODUCT_CATEGORIES,
       message                 : `A product's category must be either ${PRODUCT_CATEGORIES.join(', ')}.`
     },
-    required                  : true
+    required                  : [true, `A product must have a category.`]
+  },
+
+  subCategory: {
+    type                      : String,
+    enum: {
+      values                  : PRODUCT_SUB_CATEGORIES,
+      message                 : `A product's category must be either ${PRODUCT_SUB_CATEGORIES.join(', ')}.`
+    },
+    required                  : [true, `A product must have a subcategory.` ]
   },
 
   image: {
     type                      : String,
   },
 
-  unitPrice: {
+  entityPrice: {
     type                      : Number,
-    required                  : [true, 'A product must have an unit price.']
+    required                  : [true, 'A product must have an entity price.']
   },
 
-  unitPriceCurrency: {
+  entityPriceCurrency: {
     type                      : String,
-    default                   : PRODUCT_DEFAULT_UNIT_PRICE_CURRENCY,
+    default                   : PRODUCT_DEFAULT_ENTITY_PRICE_CURRENCY,
     enum: {
-      values                  : PRODUCT_CURRENCIES,
-      message                 : `A product's currenct must be either ${PRODUCT_CURRENCIES.join(', ')}.`
-    }
+      values                  : PRODUCT_ENTITY_PRICE_CURRENCIES,
+      message                 : `A product's currenct must be either ${PRODUCT_ENTITY_PRICE_CURRENCIES.join(', ')}.`
+    },
+    required                  : [true, `A product must have an entity price currency.` ]
+  },
+
+  entityAmount: {
+    type                      : Number,
+    required                  : [true, `A product must have an entity amount.`],
+  },
+
+  entityAmountUnit: {
+    type                      : String,
+    enum: {
+      values                  : PRODUCT_ENTITY_AMOUNT_UNITS,
+      message                 : `A product's currenct must be either ${PRODUCT_ENTITY_PRICE_CURRENCIES.join(', ')}.`
+    },
+    required                  : [true, `A product must have an entity amount unit.`],
   }
 
 }, {

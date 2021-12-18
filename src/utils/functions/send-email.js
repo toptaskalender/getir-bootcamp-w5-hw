@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer')
 
 function sendEmail({ req, email, passwordResetToken }) {
   const passwordResetLink = `${req.protocol}://${req.get('host')}/api/v1/reset-password/${passwordResetToken}`
-  const text              = `Here is your password reset link.\nPlease perform a patch request with your new password and confirmed password to the link:\n${passwordResetLink}.`
+  const text              = `Here is your password reset link.\n\nPlease perform a patch request with your new password and confirmed password to the link:\n${passwordResetLink}\n\nBest regards\nGelsin Team`
 
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,

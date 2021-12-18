@@ -1,8 +1,10 @@
 const Joi           = require('joi')
 const {
   PRODUCT_CATEGORIES,
-  PRODUCT_DEFAULT_UNIT_PRICE_CURRENCY,
-  PRODUCT_CURRENCIES
+  PRODUCT_SUB_CATEGORIES,
+  PRODUCT_DEFAULT_ENTITY_PRICE_CURRENCY,
+  PRODUCT_ENTITY_PRICE_CURRENCIES,
+  PRODUCT_ENTITY_AMOUNT_UNITS
 }                   = require('../config')
 const {
   createErrors
@@ -19,16 +21,33 @@ const createProductValidation = Joi.object({
     .valid(...PRODUCT_CATEGORIES)
     .required()
     .error(createErrors),
+
+  subCategory: Joi
+    .string()
+    .valid(...PRODUCT_SUB_CATEGORIES)
+    .required()
+    .error(createErrors),
   
-  unitPrice: Joi
+  entityPrice: Joi
     .number()
     .required()
     .error(createErrors),
 
-  unitPriceCurrency: Joi
+  entityPriceCurrency: Joi
     .string()
-    .default(PRODUCT_DEFAULT_UNIT_PRICE_CURRENCY)
-    .valid(...PRODUCT_CURRENCIES)
+    .default(PRODUCT_DEFAULT_ENTITY_PRICE_CURRENCY)
+    .valid(...PRODUCT_ENTITY_PRICE_CURRENCIES)
+    .required()
+    .error(createErrors),
+
+  entityAmount: Joi
+    .number()
+    .required()
+    .error(createErrors),
+
+  entityAmountUnit: Joi
+    .string()
+    .valid(...PRODUCT_ENTITY_AMOUNT_UNITS)
     .required()
     .error(createErrors)
   

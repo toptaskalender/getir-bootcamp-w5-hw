@@ -19,8 +19,6 @@ const getMe = catchAsync(async (req, res, next) => {
   const { id }  = req.user
   const user    = await userService.findById(id)
 
-  if (!user) return next(new AppError(400, 'Cannot find a user with that id.'))
-  
   res.status(200).json({
     status: 'success',
     data: {
@@ -35,8 +33,6 @@ const createAddress = catchAsync(async (req, res, next) => {
 
   const user = await userService.findByIdAndUpdate(id, { $push: { addresses: data } })
 
-  if (!user) return next(new AppError(400, 'Cannot find a user with this id.'))
-
   res.status(200).json({
     status: 'success',
     data: {
@@ -45,16 +41,44 @@ const createAddress = catchAsync(async (req, res, next) => {
   })
 })
 
+const updateAddress = catchAsync(async (req, res, next) => {
+  const { id }            = req.user
+  const { id: addressId } = req.params
+  const { body: data }    = req
+
+  const updateData  = {}
+  const fields      = Object.keys(data)
+
+  for (let key of fields) {
+    updateData[`addresses.$.${key}`] = data[key]
+  }
+
+  const user = await userService.findOneAndUpdate(
+    { id, 'addresses._id': addressId },
+    { $set: updateData }
+  )
+
+  if (!user) return next(new AppError(400, 'Cannot find an address with given id.'))
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: user
+    }
+  })
+})
+
 const deleteAddress = catchAsync(async (req, res, next) => {
   const { id }            = req.user
   const { id: addressId } = req.params
 
-  const beforeUpdate      = await userService.findById(id)
-  const user              = await userService.findByIdAndUpdate(id, { $pull: { addresses: { _id: addressId } } })
-  const isAddressDeleted  = beforeUpdate.addresses.length !== user.addresses.length
+  const beforeUpdateAddresses = await userService.findById(id)
+  const user                  = await userService.findByIdAndUpdate(id, { $pull: { addresses: { _id: addressId } } })
+  const isAddressesModified   = beforeUpdateAddresses.addresses.length !== user.addresses.length
 
-  if (!user) return next(new AppError(400, 'Cannot find a user with this id.'))
-  if (!isAddressDeleted) return next(new AppError(400, 'Cannot find an address with this id.'))
+  if (!isAddressesModified) {
+    return next(new AppError(400, 'Cannot find an address with given id.'))
+  }
 
   res.status(200).json({
     status: 'success',
@@ -72,8 +96,11 @@ const deleteUser  = deleteOne(userService)
 
 module.exports = {
   getMe,
+
   createAddress,
   deleteAddress,
+  updateAddress,
+
   getUsers,
   getUser,
   createUser,

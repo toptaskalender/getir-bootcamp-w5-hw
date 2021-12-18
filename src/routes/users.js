@@ -6,11 +6,14 @@ const {
 const {
   createUserValidation,
   updateUserValidation,
-  createAddressValidation
+  
+  createAddressValidation,
+  updateAddressValidation
 }             = require('../validations')
 const {
   getMe,
   createAddress,
+  updateAddress,
   deleteAddress,
 
   getUsers,
@@ -30,6 +33,10 @@ router.route('/me/addresses')
   )
 
 router.route('/me/addresses/:id')
+  .patch(
+    validate('body', updateAddressValidation),
+    updateAddress
+  )
   .delete(
     deleteAddress
   )

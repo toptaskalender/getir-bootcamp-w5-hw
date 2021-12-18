@@ -7,6 +7,16 @@ const {
 }               = require('../../utils/functions')
 
 const signUpValidation = Joi.object({
+  firstName: Joi
+    .string()
+    .required()
+    .error(createErrors),
+
+  lastName: Joi
+    .string()
+    .required()
+    .error(createErrors),
+  
   email: Joi
     .string()
     .email()

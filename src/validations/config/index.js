@@ -1,6 +1,8 @@
 module.exports.USER_ROLES                             = ['user', 'admin']
 module.exports.USER_PASSWORD_MIN                      = 8
 
+module.exports.MAX_COMMENT_CHARACTER                  = 200
+
 module.exports.PRODUCT_CATEGORIES                     = ['Beverages', 'Food']
 module.exports.PRODUCT_SUB_CATEGORIES                 = ['Water', 'Tea', 'Pasta', 'Oil']
 module.exports.PRODUCT_DEFAULT_ENTITY_PRICE_CURRENCY  = 'TRY'

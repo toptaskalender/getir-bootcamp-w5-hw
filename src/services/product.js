@@ -8,10 +8,10 @@ class ProductService extends BaseService {
       .select(fieldBy)
       .populate({
         path: 'comments',
-        select: 'user body title rating',
+        select: 'user body title rating -product',
         populate : {
           path : 'user',
-          select: 'firstName'
+          select: 'firstName -_id'
         }
       })
   }

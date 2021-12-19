@@ -24,7 +24,7 @@ function getAll(service) {
   })
 }
 
-function getOne(service){
+function getOne(service) {
   return catchAsync(async (req, res, next) => {
     const { id } = req.params
 

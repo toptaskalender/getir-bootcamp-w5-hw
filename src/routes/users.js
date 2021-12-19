@@ -1,7 +1,8 @@
 const router  = require('express').Router()
 const {
   restrictTo,
-  validate
+  validate,
+  checkId
 }             = require('../middlewares')
 const {
   createUserValidation,
@@ -22,6 +23,8 @@ const {
   updateUser,
   deleteUser
 }             = require('../controllers/users')
+
+router.param('id', checkId)
 
 router.route('/me')
   .get(getMe)

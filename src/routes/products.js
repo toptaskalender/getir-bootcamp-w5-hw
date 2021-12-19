@@ -9,7 +9,8 @@ const commentsRouter  = require('./comments')
 const {
   verifyAuth,
   restrictTo,
-  validate
+  validate,
+  checkId
 }                     = require('../middlewares')
 const {
   createProductValidation,
@@ -24,6 +25,8 @@ const {
 
   uploadImage,
 }                     = require('../controllers/products')
+
+router.param('id', checkId)
 
 router.use('/:id', commentsRouter)
 

@@ -4,13 +4,13 @@ const {
   createOne,
   updateOne,
   deleteOne
-}                 = require('./base')
+}                   = require('./base')
 const {
   productService
-}                 = require('../services')
+}                   = require('../services')
 const {
   catchAsync
-}                 = require('../utils/functions')
+}                   = require('../utils/functions')
 
 const getProducts   = getAll(productService)
 const getProduct    = getOne(productService)
@@ -22,14 +22,14 @@ const uploadImage = catchAsync(async (req, res, next) => {
   const { id }                = req.params
   const { filename: image }   = req.file
 
-  const doc = await productService.findByIdAndUpdate(id, { image })
+  const product = await productService.findByIdAndUpdate(id, { image })
 
-  if (!doc) return next(new AppError(400, 'Cannot find a document with this id. Please provide correct information.'))
+  if (!product) return next(new AppError(400, 'Cannot find a document with this id. Please provide correct information.'))
 
   res.status(200).json({
     status: 'success',
     data: {
-      data: doc
+      data: product
     }
   })
 })
@@ -40,5 +40,6 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+
   uploadImage
 }

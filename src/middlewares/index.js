@@ -1,5 +1,6 @@
 const { 
-  validate
+  validate,
+  checkId
 }           = require('./validation')
 const {
   errorHandler
@@ -11,6 +12,7 @@ const {
 
 module.exports = {
   validate,
+  checkId,
 
   errorHandler,
   

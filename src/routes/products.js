@@ -1,27 +1,31 @@
-const multer        = require('multer')
-const router        = require('express').Router()
+const multer          = require('multer')
+const router          = require('express').Router()
 const {
   storage,
   fileFilter
-}                   = require('../config/multer')
-const upload        = multer({ storage, fileFilter })
+}                     = require('../config/multer')
+const upload          = multer({ storage, fileFilter })
+const commentsRouter  = require('./comments')
 const {
   verifyAuth,
   restrictTo,
   validate
-}                   = require('../middlewares')
+}                     = require('../middlewares')
 const {
   createProductValidation,
-  updateProductValidation
-}                   = require('../validations')
+  updateProductValidation,
+}                     = require('../validations')
 const {
   getProducts,
   getProduct,
   createProduct,
   updateProduct,
   deleteProduct,
-  uploadImage
-}                   = require('../controllers/products')
+
+  uploadImage,
+}                     = require('../controllers/products')
+
+router.use('/:id', commentsRouter)
 
 router.route('/')
   .get(

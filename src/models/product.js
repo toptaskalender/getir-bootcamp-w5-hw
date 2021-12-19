@@ -65,12 +65,16 @@ const productSchema = new mongoose.Schema({
   }
 
 }, {
-  timestamps: true,
-  versionKey: false
+  toJSON      : { virtuals: true },
+  toObject    : { virtuals: true },
+  timestamps  : true,
+  versionKey  : false
 })
 
-productSchema.index({
-  name: 1
-}, { unique: true })
+productSchema.virtual('comments', {
+  ref           : 'Comment',
+  localField    : '_id',
+  foreignField  : 'product'
+})
 
 module.exports = mongoose.model('Product', productSchema)

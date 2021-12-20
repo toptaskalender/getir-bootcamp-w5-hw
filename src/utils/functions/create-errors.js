@@ -28,6 +28,12 @@ function createErrors(errors) {
       case 'number.base':
         err.message = `${field.label} must be a number.`
         break
+      case 'number.max':
+        err.message = `${field.label} must be less than or equal to ${field.limit}.`
+        break
+      case 'number.min':
+        err.message = `${field.label} must be greater than or equal to ${field.limit}.`
+        break
 
       case 'object.with':
         err.message = `${field.main} must be provided with ${field.peer}.`

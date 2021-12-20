@@ -9,10 +9,11 @@ const createCategoryValidation = Joi.object({
     .required()
     .error(createErrors),
 
-  subCategories: Joi
+  subcategories: Joi
     .array()
     .items(
-      Joi.string()
+      Joi
+        .string()
     )
   
 })

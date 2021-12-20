@@ -4,16 +4,11 @@ const {
   createOne,
   updateOne,
   deleteOne
-}                 = require('./base')
-const {
-  catchAsync
-}                 = require('../utils/functions')
-const {
-  AppError
-}                 = require('../utils/classes')
-const {
-  categoryService
-}                 = require('../services')
+}                           = require('./base')
+const { catchAsync }        = require('../utils/functions')
+const { AppError }          = require('../utils/classes')
+const { createLabelFrom }   = require('../utils/functions')
+const { categoryService }   = require('../services')
 
 const getCategories   = getAll(categoryService)
 const getCategory     = getOne(categoryService)
@@ -22,10 +17,8 @@ const updateCategory  = updateOne(categoryService)
 const deleteCategory  = deleteOne(categoryService)
 
 const createSubcategory = catchAsync(async (req,res, next) => {
-  const { id }    = req.params
-  const {
-    name: subcategory
-  }               = req.body
+  const { id }                = req.params
+  const { name: subcategory } = req.body
 
   const beforeCreateSubcategory = await categoryService.findById(id)
   const category                = await categoryService.findByIdAndUpdate(id, { $addToSet: { subcategories: subcategory } })
@@ -43,17 +36,15 @@ const createSubcategory = catchAsync(async (req,res, next) => {
 })
 
 const updateSubcategory = catchAsync(async (req, res, next) => {
-  const { id }      = req.params
-  const [
-    oldSubcategory,
-    newSubcategory
-  ]                 = req.body.name
+  const { id, subcategory }       = req.params
+  const { name: newSubcategory }  = req.body
 
-  const category  = await categoryService.findOneAndUpdate(
+  const oldSubcategory = createLabelFrom(subcategory, '-')
+
+  const category = await categoryService.findOneAndUpdate(
     { id, 'subcategories': oldSubcategory },
     { $set: { 'subcategories.$': newSubcategory } }
   )
-
   if (!category) return next(new AppError(400, 'Cannot find a category with given id or that has the same subcategory name.'))
 
   res.status(200).json({
@@ -61,6 +52,23 @@ const updateSubcategory = catchAsync(async (req, res, next) => {
     data: {
       data: category
     }
+  })
+})
+
+const deleteSubcategory = catchAsync(async (req, res, next) => {
+  const { id, subcategory } = req.params
+
+  const willBeDeletedSubcategory = createLabelFrom(subcategory, '-')
+
+  const category = await categoryService.findOneAndUpdate(
+    { id, 'subcategories': willBeDeletedSubcategory },
+    { $pull: { 'subcategories': willBeDeletedSubcategory } }
+  )
+  if (!category) return next(new AppError(400, 'Cannot find a category with given id or that has the same subcategory name.'))
+
+  res.status(204).json({
+    status: 'success',
+    data: null
   })
 })
 
@@ -72,5 +80,6 @@ module.exports = {
   deleteCategory,
 
   createSubcategory,
-  updateSubcategory
+  updateSubcategory,
+  deleteSubcategory
 }

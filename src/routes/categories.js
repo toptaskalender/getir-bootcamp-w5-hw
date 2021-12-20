@@ -20,7 +20,8 @@ const {
   deleteCategory,
 
   createSubcategory,
-  updateSubcategory
+  updateSubcategory,
+  deleteSubcategory
 }                           = require('../controllers/categories')
 
 router.param('id', checkId)
@@ -59,11 +60,18 @@ router.route('/:id/subcategories')
     validate('body', createSubcategoryValidation),
     createSubcategory
   )
+
+router.route('/:id/subcategories/:subcategory')
   .patch(
     verifyAuth,
     restrictTo('admin'),
     validate('body', updateSubcategoryValidation),
     updateSubcategory
+  )
+  .delete(
+    verifyAuth,
+    restrictTo('admin'),
+    deleteSubcategory
   )
 
 module.exports = router

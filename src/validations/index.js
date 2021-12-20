@@ -20,6 +20,10 @@ const {
   createCommentValidation,
   updateCommentValidation
 }                           = require('./comment')
+const {
+  createCategoryValidation,
+  updateCategoryValidation
+}                           = require('./category')
 
 module.exports = {
   signUpValidation,
@@ -38,5 +42,8 @@ module.exports = {
   updateProductValidation,
 
   createCommentValidation,
-  updateCommentValidation
+  updateCommentValidation,
+
+  createCategoryValidation,
+  updateCategoryValidation
 }

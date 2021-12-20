@@ -7,14 +7,20 @@ const {
 }                           = require('../middlewares')
 const {
   createCategoryValidation,
-  updateCategoryValidation
+  updateCategoryValidation,
+
+  createSubcategoryValidation,
+  updateSubcategoryValidation
 }                           = require('../validations')
 const {
   getCategories,
   getCategory,
   createCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+
+  createSubcategory,
+  updateSubcategory
 }                           = require('../controllers/categories')
 
 router.param('id', checkId)
@@ -44,6 +50,20 @@ router.route('/:id')
     verifyAuth,
     restrictTo('admin'),
     deleteCategory
+  )
+
+router.route('/:id/subcategories')
+  .post(
+    verifyAuth,
+    restrictTo('admin'),
+    validate('body', createSubcategoryValidation),
+    createSubcategory
+  )
+  .patch(
+    verifyAuth,
+    restrictTo('admin'),
+    validate('body', updateSubcategoryValidation),
+    updateSubcategory
   )
 
 module.exports = router

@@ -6,6 +6,7 @@ const sendEmail                     = require('./send-email')
 const createPasswordResetTokenHash  = require('./create-password-reset-token-hash')
 const verifyToken                   = require('./verify-token')
 const createErrors                  = require('./create-errors')
+const createLabelFrom               = require('./create-label-from')
 
 module.exports = {
   constructDataFromReq,
@@ -15,5 +16,6 @@ module.exports = {
   sendEmail,
   createPasswordResetTokenHash,
   verifyToken,
-  createErrors
+  createErrors,
+  createLabelFrom
 }

@@ -5,13 +5,7 @@ const {
 
 const updateSubcategoryValidation = Joi.object({
   name: Joi
-    .array()
-    .items(
-      Joi
-        .string()
-        .required()
-    )
-    .length(2)
+    .string()
     .required()
     .error(createErrors),
 

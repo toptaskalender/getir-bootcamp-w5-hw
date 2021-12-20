@@ -10,11 +10,33 @@ const {
   productService,
   commentService
 }                   = require('../services')
-const { AppError }  = require('../utils/classes')
+const { 
+  AppError,
+  APIFeatures
+}                   = require('../utils/classes')
 
 const getComment    = getOne(commentService)
 const updateComment = updateOne(commentService)
 const deleteComment = deleteOne(commentService)
+
+const getComments = catchAsync(async (req, res, next) => {
+  const { id: product } = req.params
+  const { query }       = req
+  const features        = new APIFeatures(query)
+
+  const queries             = features.createQuery()
+  queries.filterBy.product  = product
+
+  const comments = await commentService.find(queries)
+
+  res.status(200).json({
+    status: 'success',
+    results: comments.length,
+    data: {
+      data: comments
+    }
+  })
+})
 
 const createComment = catchAsync(async (req, res, next) => {
   const { id: userId }    = req.user
@@ -36,6 +58,7 @@ const createComment = catchAsync(async (req, res, next) => {
 })
 
 module.exports = {
+  getComments,
   getComment,
   createComment,
   updateComment,

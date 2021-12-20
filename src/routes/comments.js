@@ -9,6 +9,7 @@ const {
   updateCommentValidation
 }                     = require('../validations')
 const {
+  getComments,
   getComment,
   createComment,
   updateComment,
@@ -18,6 +19,9 @@ const {
 router.param('id', checkId)
 
 router.route('/comments')
+  .get(
+    getComments
+  )
   .post(
     verifyAuth,
     validate('body', createCommentValidation),

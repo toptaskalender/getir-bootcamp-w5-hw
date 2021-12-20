@@ -17,7 +17,8 @@ const {
   updateProductValidation
 }                           = require('./product')
 const {
-  createCommentValidation
+  createCommentValidation,
+  updateCommentValidation
 }                           = require('./comment')
 
 module.exports = {
@@ -36,5 +37,6 @@ module.exports = {
   createProductValidation,
   updateProductValidation,
 
-  createCommentValidation
+  createCommentValidation,
+  updateCommentValidation
 }

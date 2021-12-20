@@ -6,7 +6,6 @@ const {
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    console.log('storage file => ', file)
     cb(null, path.join(__dirname, '..', 'public', 'images', 'products'))
   },
   filename: function (req, file, cb) {
@@ -18,7 +17,7 @@ const storage = multer.diskStorage({
 })
 
 function fileFilter (req, file, cb) {
-  const isFileImage = file.mimetype === 'image/png'
+  const isFileImage = file.mimetype.startsWith('image/')
   
   if (!isFileImage) {
     return cb(new AppError(400, 'You can only upload images.'))

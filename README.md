@@ -6,7 +6,9 @@ This repo was created to practice `express`, `MongoDB`, `mongoose`, `jsonwebtoke
 
 ### Notes
 
-Please be sure, you preceded all APIs with `/api/v1`.
+- Please be sure, you preceded all APIs with `/api/v1`.
+- If you perform a `POST` request to any endpoint, you have to provide the exact same data keys as shown above on a request body.
+- If you perform a `PATCH` request to any endpoint, you can provide one of the keys that is shown above.
 
 ### Auth
 
@@ -45,11 +47,6 @@ Please be sure, you preceded all APIs with `/api/v1`.
 | /products/:id/comments/:id | `GET` | Empty | Empty | Returns resource |
 | /products/:id/comments/:id | `PATCH` | `{ "title": "Pepsi Coke", "body": "It's very economic.", "rating": 5 }` | Authentication: Bearer Token | Returns updated resource or error message |
 | /products/:id/comments/:id | `DELETE` | Empty | Authentication: Bearer Token | Returns status of destroying |
-
-#### Notes
-
-- If you perform a `POST` request to any endpoint, you have to provide the exact same data keys as shown above on a request body.
-- If you perform a `PATCH` request to any endpoint, you can provide one of the keys that is shown above.
 
 ## .env
 

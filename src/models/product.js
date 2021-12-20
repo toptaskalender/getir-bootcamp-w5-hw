@@ -10,6 +10,7 @@ const {
 const productSchema = new mongoose.Schema({
   name: {
     type                      : String,
+    unique                    : true,
     required                  : [true, 'A product must have a name field.']
   },
 

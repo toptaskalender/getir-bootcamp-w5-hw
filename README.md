@@ -36,14 +36,14 @@ Please be sure, you preceded all APIs with `/api/v1`.
 | Route | HTTP Verb | Request Body | Header Body | Description |
 | --- | --- | --- | --- | --- |
 | /products | `GET` | Empty | Empty | Returns resource |
-| /products | `POST` | `{ "name": "Barilla", "category": "Food", "subCategory": "Pasta", "entityPrice": 6, "entityPriceCurrency": "TRY", "entityAmount": 300, "entityAmountUnit": "g" }`| Authentication: Bearer Token | Returns created resource or error message |
+| /products | `POST` | `{ "name": "Pepsi Coke", "category": "Beverages", "subCategory": "Soda", "entityPrice": 3.90, "entityPriceCurrency": "USD", "entityAmount": 250, "entityAmountUnit": "ml" }`| Authentication: Bearer Token | Returns created resource or error message |
 | /products/:id | `GET` | Empty | Empty | Returns resource |
-| /products/:id | `PATCH` | `{ "name": "Barilla", "category": "Food", "subCategory": "Pasta", "entityPrice": 6, "entityPriceCurrency": "TRY", "entityAmount": 300, "entityAmountUnit": "g" }` | Authentication: Bearer Token | Returns updated resource or error message |`
+| /products/:id | `PATCH` | `{ "name": "Pepsi Coke", "category": "Beverages", "subCategory": "Soda", "entityPrice": 3.90, "entityPriceCurrency": "USD", "entityAmount": 250, "entityAmountUnit": "ml" }` | Authentication: Bearer Token | Returns updated resource or error message |`
 | /products/:id | `DELETE` | Empty | Authentication: Bearer Token | Returns status of destroying |
 | /products/:id/comments | `GET` | Empty | Empty | Returns resource |
-| /products/:id/comments | `POST` | `{ "title": "About Tea", "body": "It's very economic.", "rating": 1 }` | Authentication: Bearer Token | Returns created resource or error message |
+| /products/:id/comments | `POST` | `{ "title": "Pepsi Coke", "body": "It's very economic.", "rating": 5 }` | Authentication: Bearer Token | Returns created resource or error message |
 | /products/:id/comments/:id | `GET` | Empty | Empty | Returns resource |
-| /products/:id/comments/:id | `PATCH` | `{ "title": "About Tea", "body": "It's very economic.", "rating": 1 }` | Authentication: Bearer Token | Returns updated resource or error message |
+| /products/:id/comments/:id | `PATCH` | `{ "title": "Pepsi Coke", "body": "It's very economic.", "rating": 5 }` | Authentication: Bearer Token | Returns updated resource or error message |
 | /products/:id/comments/:id | `DELETE` | Empty | Authentication: Bearer Token | Returns status of destroying |
 
 #### Notes

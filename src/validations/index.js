@@ -22,7 +22,10 @@ const {
 }                           = require('./comment')
 const {
   createCategoryValidation,
-  updateCategoryValidation
+  updateCategoryValidation,
+
+  createSubcategoryValidation,
+  updateSubcategoryValidation
 }                           = require('./category')
 
 module.exports = {
@@ -45,5 +48,7 @@ module.exports = {
   updateCommentValidation,
 
   createCategoryValidation,
-  updateCategoryValidation
+  updateCategoryValidation,
+  createSubcategoryValidation,
+  updateSubcategoryValidation
 }

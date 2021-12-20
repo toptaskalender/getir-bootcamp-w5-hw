@@ -1,6 +1,6 @@
 # Gelsin
 
-This repo was created to practice `express`, `MongoDB`, `mongoose`, `jsonwebtoken`, `morgan`, `murter`, `nodemailer` and any other packages or technologies. 
+A REST-API imitating 'getir'. 
 
 ## API Endpoints
 

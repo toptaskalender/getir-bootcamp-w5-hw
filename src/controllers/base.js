@@ -29,7 +29,6 @@ function getOne(service) {
     const { id } = req.params
 
     const doc = await service.findById(id)
-
     if (!doc) return next(new AppError(400, 'Cannot find a document with this id. Please provide correct information.'))
 
     res.status(200).json({
@@ -62,7 +61,6 @@ function updateOne(service) {
     const { body: data}  = req
 
     const doc = await service.findByIdAndUpdate(id, data)
-
     if (!doc) return next(new AppError(400, 'Cannot find a document with this id. Please provide correct information.'))
 
     res.status(200).json({
@@ -79,7 +77,6 @@ function deleteOne(service) {
     const { id } = req.params
 
     const doc = await service.findByIdAndDelete(id)
-
     if (!doc) return next(new AppError(400, 'Cannot find a document with this id. Please provide correct information.'))
 
     res.status(204).json({

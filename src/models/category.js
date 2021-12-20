@@ -3,17 +3,14 @@ const mongoose  = require('mongoose')
 const categorySchema = new mongoose.Schema({
   name: {
     type            : String,
+    unique          : true,
     required        : [true, 'A category must have a name.'] 
   },
 
-  subCategories     : [String]
+  subcategories     : [String]
 
 }, {
   versionKey: false
-})
-
-categorySchema.index({
-  name: 1
 })
 
 module.exports = mongoose.model('Category', categorySchema)

@@ -1,10 +1,20 @@
 const {
+  getOne,
+  updateOne,
+  deleteOne
+}                   = require('./base')
+const {
   catchAsync
 }                   = require('../utils/functions')
 const {
   productService,
   commentService
 }                   = require('../services')
+const { AppError }  = require('../utils/classes')
+
+const getComment    = getOne(commentService)
+const updateComment = updateOne(commentService)
+const deleteComment = deleteOne(commentService)
 
 const createComment = catchAsync(async (req, res, next) => {
   const { id: userId }    = req.user
@@ -26,5 +36,8 @@ const createComment = catchAsync(async (req, res, next) => {
 })
 
 module.exports = {
-  createComment
+  getComment,
+  createComment,
+  updateComment,
+  deleteComment
 }

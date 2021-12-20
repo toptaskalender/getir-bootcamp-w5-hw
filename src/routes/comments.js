@@ -5,10 +5,14 @@ const {
   checkId
 }                     = require('../middlewares')
 const {
-  createCommentValidation
+  createCommentValidation,
+  updateCommentValidation
 }                     = require('../validations')
 const {
-  createComment
+  getComment,
+  createComment,
+  updateComment,
+  deleteComment
 }                     = require('../controllers/comments')
 
 router.param('id', checkId)
@@ -18,6 +22,20 @@ router.route('/comments')
     verifyAuth,
     validate('body', createCommentValidation),
     createComment
+  )
+
+router.route('/comments/:id')
+  .get(
+    getComment
+  )
+  .patch(
+    verifyAuth,
+    validate('body', updateCommentValidation),
+    updateComment
+  )
+  .delete(
+    verifyAuth,
+    deleteComment
   )
 
 module.exports = router

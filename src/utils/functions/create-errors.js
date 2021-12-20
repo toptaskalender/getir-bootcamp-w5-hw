@@ -35,6 +35,10 @@ function createErrors(errors) {
         err.message = `${field.label} must be greater than or equal to ${field.limit}.`
         break
 
+      case 'array.length':
+        err.message = `${field.label}'s length must be equal to ${field.limit}.`
+        break
+
       case 'object.with':
         err.message = `${field.main} must be provided with ${field.peer}.`
         break

@@ -1,22 +1,13 @@
-const express         = require('express')
-const path            = require('path')
-const morgan          = require('morgan')
+const express                         = require('express')
+const path                            = require('path')
+const morgan                          = require('morgan')
+const { resLogWriteStream }           = require('./logs')
 const {
-  resLogWriteStream
-}                     = require('./logs')
-const {
-  authRouter,
-  usersRouter,
-  productsRouter,
-  categoriesRouter
-}                     = require('./routes')
-const {
-  errorHandler,
-  verifyAuth
-}                     = require('./middlewares')
-const {
-  AppError
-}                     = require('./utils/classes')
+  authRouter, usersRouter,
+  productsRouter, categoriesRouter
+}                                     = require('./routes')
+const { errorHandler, verifyAuth }    = require('./middlewares')
+const { AppError }                    = require('./utils/classes')
 
 const app = express()
 

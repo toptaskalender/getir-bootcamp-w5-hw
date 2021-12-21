@@ -1,14 +1,8 @@
-const {
-  getAll,
-  getOne,
-  createOne,
-  updateOne,
-  deleteOne
-}                           = require('./base')
-const { catchAsync }        = require('../utils/functions')
-const { AppError }          = require('../utils/classes')
-const { createLabelFrom }   = require('../utils/functions')
-const { categoryService }   = require('../services')
+const { getAll, getOne, createOne, updateOne, deleteOne } = require('./base')
+const { catchAsync }                                      = require('../utils/functions')
+const { AppError }                                        = require('../utils/classes')
+const { createLabelFrom }                                 = require('../utils/functions')
+const { categoryService }                                 = require('../services')
 
 const getCategories   = getAll(categoryService)
 const getCategory     = getOne(categoryService)
@@ -38,8 +32,7 @@ const createSubcategory = catchAsync(async (req,res, next) => {
 const updateSubcategory = catchAsync(async (req, res, next) => {
   const { id, subcategory }       = req.params
   const { name: newSubcategory }  = req.body
-
-  const oldSubcategory = createLabelFrom(subcategory, '-')
+  const oldSubcategory            = createLabelFrom(subcategory, '-')
 
   const category = await categoryService.findOneAndUpdate(
     { id, 'subcategories': oldSubcategory },
@@ -56,9 +49,8 @@ const updateSubcategory = catchAsync(async (req, res, next) => {
 })
 
 const deleteSubcategory = catchAsync(async (req, res, next) => {
-  const { id, subcategory } = req.params
-
-  const willBeDeletedSubcategory = createLabelFrom(subcategory, '-')
+  const { id, subcategory }       = req.params
+  const willBeDeletedSubcategory  = createLabelFrom(subcategory, '-')
 
   const category = await categoryService.findOneAndUpdate(
     { id, 'subcategories': willBeDeletedSubcategory },

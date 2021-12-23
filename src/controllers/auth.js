@@ -33,7 +33,7 @@ const logIn = catchAsync(async (req, res) => {
     !user ||
     !(await user.isPasswordEqualToHash(password, user.password))
   ) {
-    throw new AppError(400, 'Email or password is wrong. Please provide correct information.')
+    return next(new AppError(400, 'Email or password is wrong. Please provide correct information.'))
   }
 
   user.password = undefined
@@ -53,7 +53,7 @@ const sendPasswordResetEmail = catchAsync(async (req, res) => {
 
   const user = await authService.findOne({ email })
   
-  if (!user) throw new AppError(400, 'Cannot find a user with given email. Please provide correct information.')
+  if (!user) return next(new AppError(400, 'Cannot find a user with given email. Please provide correct information.'))
 
   const passwordResetToken = user.setPasswordResetToken()
 
@@ -80,7 +80,7 @@ const resetPassword = catchAsync(async (req, res) => {
     passwordResetTokenExpiresAt: { $gte: Date.now() }
   })
   
-  if (!user) throw new AppError(400, 'Malformed password reset token.')
+  if (!user) return next(new AppError(400, 'Malformed password reset token.'))
   
   user.password         = password
   user.passwordConfirm  = passwordConfirm
@@ -108,7 +108,7 @@ const updatePassword = catchAsync(async (req, res) => {
   let user = await authService.findById(id, '+password')
   
   if (!user.isPasswordEqualToHash(currentPassword, user.password)) {
-    throw new AppError(400, 'Current password is not correct. Please provide correct information.')
+    return next(new AppError(400, 'Current password is not correct. Please provide correct information.'))
   }
 
   user.password         = password

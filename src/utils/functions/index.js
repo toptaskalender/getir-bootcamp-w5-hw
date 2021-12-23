@@ -5,7 +5,7 @@ const signToken                     = require('./sign-token')
 const sendEmail                     = require('./send-email')
 const createPasswordResetTokenHash  = require('./create-password-reset-token-hash')
 const verifyToken                   = require('./verify-token')
-const createErrors                  = require('./create-errors')
+const joiErrorHandler               = require('./joi-error-handler')
 const createLabelFrom               = require('./create-label-from')
 
 module.exports = {
@@ -16,6 +16,6 @@ module.exports = {
   sendEmail,
   createPasswordResetTokenHash,
   verifyToken,
-  createErrors,
+  joiErrorHandler,
   createLabelFrom
 }

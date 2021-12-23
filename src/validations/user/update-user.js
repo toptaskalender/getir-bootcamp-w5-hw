@@ -3,22 +3,22 @@ const {
   USER_ROLES
 }                 = require('../config')
 const {
-  createErrors
+  joiErrorHandler
 }                 = require('../../utils/functions')
 
 const updateUserValidation = Joi.object({
   firstName: Joi
     .string()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   lastName: Joi
     .string()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   role: Joi
     .string()
     .valid(...USER_ROLES)
-    .error(createErrors)
+    .error(joiErrorHandler)
     
 })
 

@@ -1,35 +1,36 @@
 const Joi           = require('joi')
 const {
-  USER_PASSWORD_MIN,
-  USER_ROLES
+  USER_PASSWORD_PATTERN,
+  USER_ROLES,
+  USER_EMAIL_OPTIONS
 }                   = require('../config')
 const {
-  createErrors
+  joiErrorHandler
 }                   = require('../../utils/functions')
 
 const createUserValidation = Joi.object({
   firstName: Joi
     .string()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   lastName: Joi
     .string()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   email: Joi
     .string()
-    .email()
+    .email(USER_EMAIL_OPTIONS)
     .lowercase()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   password: Joi
     .string()
-    .min(USER_PASSWORD_MIN)
+    .pattern(USER_PASSWORD_PATTERN)
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   passwordConfirm: Joi
     .ref('password'),
@@ -38,10 +39,10 @@ const createUserValidation = Joi.object({
     .string()
     .valid(...USER_ROLES)
     .default('user')
-    .error(createErrors)
+    .error(joiErrorHandler)
     
 })
   .with('password', 'passwordConfirm')
-  .error(createErrors)
+  .error(joiErrorHandler)
   
 module.exports = createUserValidation

@@ -4,18 +4,19 @@ const {
   createOne,
   updateOne,
   deleteOne
-}             = require('./base')
-const {
-  userService
-}             = require('../services')
-const {
-  catchAsync
-}             = require('../utils/functions')
-const {
-  AppError
-}             = require('../utils/classes')
+}                     = require('./base')
+const { userService } = require('../services')
+const { catchAsync }  = require('../utils/functions')
+const { AppError }    = require('../utils/classes')
 
-const getMe = catchAsync(async (req, res, next) => {
+
+const getUsers    = getAll(userService)
+const getUser     = getOne(userService)
+const createUser  = createOne(userService)
+const updateUser  = updateOne(userService)
+const deleteUser  = deleteOne(userService)
+
+const getMe = catchAsync(async (req, res) => {
   const { id }  = req.user
   const user    = await userService.findById(id)
 
@@ -27,7 +28,7 @@ const getMe = catchAsync(async (req, res, next) => {
   })
 })
 
-const createAddress = catchAsync(async (req, res, next) => {
+const createAddress = catchAsync(async (req, res) => {
   const { id }          = req.user
   const { body: data }  = req
 
@@ -87,12 +88,6 @@ const deleteAddress = catchAsync(async (req, res, next) => {
     }
   })
 })
-
-const getUsers    = getAll(userService)
-const getUser     = getOne(userService)
-const createUser  = createOne(userService)
-const updateUser  = updateOne(userService)
-const deleteUser  = deleteOne(userService)
 
 module.exports = {
   getMe,

@@ -10,6 +10,19 @@ const createCategory  = createOne(categoryService)
 const updateCategory  = updateOne(categoryService)
 const deleteCategory  = deleteOne(categoryService)
 
+
+const getSubcategories = catchAsync(async (req, res, next) => {
+  const subcategories = await categoryService.findSubcategories()
+
+  res.status(200).json({
+    status: 'success',
+    results: subcategories.length,
+    data: {
+      data: subcategories
+    }
+  })
+})
+
 const createSubcategory = catchAsync(async (req,res, next) => {
   const { id }                = req.params
   const { name: subcategory } = req.body
@@ -71,6 +84,7 @@ module.exports = {
   updateCategory,
   deleteCategory,
 
+  getSubcategories,
   createSubcategory,
   updateSubcategory,
   deleteSubcategory

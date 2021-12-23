@@ -19,6 +19,7 @@ const {
   updateCategory,
   deleteCategory,
 
+  getSubcategories,
   createSubcategory,
   updateSubcategory,
   deleteSubcategory
@@ -35,6 +36,11 @@ router.route('/')
     restrictTo('admin'),
     validate('body', createCategoryValidation),
     createCategory
+  )
+
+router.route('/subcategories')
+  .get(
+    getSubcategories
   )
 
 router.route('/:id')

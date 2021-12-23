@@ -1,32 +1,32 @@
 const Joi       = require('joi')
 const {
-  createErrors
+  joiErrorHandler
 }               = require('../../utils/functions')
 
 const updateAddressValidation = Joi.object({
   label: Joi
     .string()
-    .error(createErrors),
+    .error(joiErrorHandler),
   
   street: Joi
     .string()
-    .error(createErrors),
+    .error(joiErrorHandler),
   
   city: Joi
     .string()
-    .error(createErrors),
+    .error(joiErrorHandler),
   
   province: Joi
     .string()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   zip: Joi
     .number()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   country: Joi
     .string()
-    .error(createErrors)
+    .error(joiErrorHandler)
   
 })
   

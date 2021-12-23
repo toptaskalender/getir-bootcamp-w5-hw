@@ -1,13 +1,13 @@
 const Joi       = require('joi')
 const {
-  createErrors
+  joiErrorHandler
 }               = require('../../utils/functions')
 
 const createCategoryValidation = Joi.object({
   name: Joi
     .string()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   subcategories: Joi
     .array()

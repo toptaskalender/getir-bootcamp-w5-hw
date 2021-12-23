@@ -1,16 +1,4 @@
-const mongoose  = require('mongoose')
-
-const categorySchema = new mongoose.Schema({
-  name: {
-    type            : String,
-    unique          : true,
-    required        : [true, 'A category must have a name.'] 
-  },
-
-  subcategories     : [String]
-
-}, {
-  versionKey: false
-})
+const mongoose            = require('mongoose')
+const { categorySchema }  = require('./schemas')
 
 module.exports = mongoose.model('Category', categorySchema)

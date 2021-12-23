@@ -1,4 +1,4 @@
-function createErrors(errors) {
+function joiErrorHandler(errors) {
   console.log('errors => ', errors)
 
   errors.forEach(err => {
@@ -48,4 +48,4 @@ function createErrors(errors) {
   return errors
 }
 
-module.exports = createErrors
+module.exports = joiErrorHandler

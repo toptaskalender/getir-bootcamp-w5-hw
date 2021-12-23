@@ -1,6 +1,6 @@
 function catchAsync(callback) {
   return (req, res, next) => {
-    callback(req, res)
+    callback(req, res, next)
       .catch(next)
   }
 }

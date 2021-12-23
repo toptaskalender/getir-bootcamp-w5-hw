@@ -3,27 +3,27 @@ const {
   MAX_COMMENT_CHARACTER
 }                   = require('../config')
 const {
-  createErrors
+  joiErrorHandler
 }                   = require('../../utils/functions')
 
 const createCommentValidation = Joi.object({
   title: Joi
     .string()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
   
   body: Joi
     .string()
     .max(MAX_COMMENT_CHARACTER)
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   rating: Joi
     .number()
     .min(1)
     .max(5)
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
   
 })
 

@@ -1,40 +1,39 @@
-const Joi       = require('joi')
+const Joi                 = require('joi')
+const { joiErrorHandler } = require('../../utils/functions')
 const {
-  USER_PASSWORD_MIN
-}               = require('../config')
-const {
-  createErrors
-}               = require('../../utils/functions')
+  USER_PASSWORD_PATTERN,
+  USER_EMAIL_OPTIONS
+}                         = require('../config')
 
 const signUpValidation = Joi.object({
   firstName: Joi
     .string()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   lastName: Joi
     .string()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
   
   email: Joi
     .string()
-    .email()
+    .email(USER_EMAIL_OPTIONS)
     .lowercase()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   password: Joi
     .string()
-    .min(USER_PASSWORD_MIN)
+    .pattern(USER_PASSWORD_PATTERN)
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   passwordConfirm: Joi
     .ref('password')
     
 })
   .with('password', 'passwordConfirm')
-  .error(createErrors)
+  .error(joiErrorHandler)
 
 module.exports = signUpValidation

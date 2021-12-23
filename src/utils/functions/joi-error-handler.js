@@ -15,6 +15,9 @@ function joiErrorHandler(errors) {
       case 'string.base':
         err.message = `${field.label} must be a string.`
         break
+      case 'string.pattern.base':
+        err.message = `${field.label} must satisfy the required pattern (${field.regex}).`
+        break
       case 'string.empty':
         err.message = `${field.label} cannot be empty.`
         break

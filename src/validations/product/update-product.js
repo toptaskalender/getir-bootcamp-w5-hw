@@ -6,41 +6,41 @@ const {
   PRODUCT_ENTITY_AMOUNT_UNITS
 }                   = require('../config')
 const {
-  createErrors
+  joiErrorHandler
 }                   = require('../../utils/functions')
 
 const updateProductValidation = Joi.object({
   name: Joi
     .string()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   category: Joi
     .string()
     .valid(...PRODUCT_CATEGORIES)
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   subCategory: Joi
     .string()
     .valid(...PRODUCT_SUB_CATEGORIES)
-    .error(createErrors),
+    .error(joiErrorHandler),
   
   entityPrice: Joi
     .number()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   entityPriceCurrency: Joi
     .string()
     .valid(...PRODUCT_ENTITY_PRICE_CURRENCIES)
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   entityAmount: Joi
     .number()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   entityAmountUnit: Joi
     .string()
     .valid(...PRODUCT_ENTITY_AMOUNT_UNITS)
-    .error(createErrors),
+    .error(joiErrorHandler),
   
 })
 

@@ -1,37 +1,33 @@
 const { constructAppError } = require('../../utils/functions')
 
 function errorHandler(err, req, res, next) {
-  let error                 = err
-  const isCastError         = err.code === 11000
+  const isDuplicateKeyError = err.code === 11000
   const isValidationError   = err.name === 'ValidationError'
   const isEmailSendingError = err.code === 'EAUTH'
 
   if (
-    isCastError ||
+    isDuplicateKeyError ||
     isValidationError ||
     isEmailSendingError
   ) {
-    error = constructAppError(JSON.parse(JSON.stringify(err)));
+    err = constructAppError(JSON.parse(JSON.stringify(err)));
   }
 
-  if (error.isOperational) {
-    res
-      .status(error.statusCode)
-      .json({
-        error: error,
-        status: error.status,
-        message: error.msg,
-      })
+  if (err.isOperational) {
+    res.status(err.statusCode).json({
+      error: err,
+      status: err.status,
+      message: err.message,
+      stack: err.stack
+    })
   } else {
-    console.error(error)
-    res
-      .status(500)
-      .json({
-        error: error,
-        status: 'error',
-        message: 'Something went really wrong. 💥',
-        stack: error.stack
-      })
+    console.error(err)
+    res.status(500).json({
+      error: err,
+      status: 'error',
+      message: 'Something went really wrong. 💥',
+      stack: err.stack
+    })
   }
 }
 

@@ -3,7 +3,7 @@ const bcryptjs                    = require('bcryptjs')
 const crypto                      = require('crypto')
 const {
   USER_ROLES,
-  USER_PASSWORD_MIN
+  USER_PASSWORD_PATTERN
 }                                 = require('../validations/config')
 const {
   createPasswordResetTokenHash
@@ -22,14 +22,19 @@ const userSchema = new mongoose.Schema({
 
   email: {
     type                      : String,
-    lowercase                 : [true, 'A user must have an email.'],
-    required                  : true
+    lowercase                 : true,
+    required                  : [true, 'A user must have an email']
   },
 
   password: {
     type                      : String,
-    minlength                 : [USER_PASSWORD_MIN, `A user's password must be at least ${USER_PASSWORD_MIN} characters long.`],
     select                    : false,
+    validate: {
+      validator: function(v) {
+        return USER_PASSWORD_PATTERN.test(v)
+      },
+      message: 'Password must be 8-30 character long and only consist of numbers and letters.'
+    },
     required                  : [true, 'A user must have an password.']
   },
 

@@ -1,18 +1,19 @@
-const Joi               = require('joi')
-const { createErrors }  = require('../../utils/functions')
+const Joi                     = require('joi')
+const { joiErrorHandler }     = require('../../utils/functions')
+const { USER_EMAIL_OPTIONS }  = require('../config')
 
 const logInValidation = Joi.object({
   email: Joi
     .string()
-    .email()
+    .email(USER_EMAIL_OPTIONS)
     .lowercase()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   password: Joi
     .string()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
 })
 

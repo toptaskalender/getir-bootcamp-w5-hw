@@ -1,5 +1,6 @@
 module.exports.USER_ROLES                             = ['user', 'admin']
-module.exports.USER_PASSWORD_MIN                      = 8
+module.exports.USER_PASSWORD_PATTERN                  = /^[a-zA-Z0-9]{8,30}$/
+module.exports.USER_EMAIL_OPTIONS                     = { minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }
 
 module.exports.MAX_COMMENT_CHARACTER                  = 200
 

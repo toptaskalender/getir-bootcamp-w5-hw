@@ -24,7 +24,7 @@ const signUp = catchAsync(async (req, res) => {
   })
 })
 
-const logIn = catchAsync(async (req, res, next) => {
+const logIn = catchAsync(async (req, res) => {
   const { email, password } = req.body
 
   const user = await authService.findOne({ email }, '+password')
@@ -33,7 +33,7 @@ const logIn = catchAsync(async (req, res, next) => {
     !user ||
     !(await user.isPasswordEqualToHash(password, user.password))
   ) {
-    return next(new AppError(400, 'Email or password is wrong. Please provide correct information.'))
+    throw new AppError(400, 'Email or password is wrong. Please provide correct information.')
   }
 
   user.password = undefined
@@ -48,12 +48,12 @@ const logIn = catchAsync(async (req, res, next) => {
   })
 })
 
-const sendPasswordResetEmail = catchAsync(async (req, res, next) => {
+const sendPasswordResetEmail = catchAsync(async (req, res) => {
   const { email } = req.body
 
   const user = await authService.findOne({ email })
   
-  if (!user) return next(new AppError(400, 'Cannot find a user with this email. Please provide correct information.'))
+  if (!user) throw new AppError(400, 'Cannot find a user with given email. Please provide correct information.')
 
   const passwordResetToken = user.setPasswordResetToken()
 
@@ -66,7 +66,7 @@ const sendPasswordResetEmail = catchAsync(async (req, res, next) => {
   })
 })
 
-const resetPassword = catchAsync(async (req, res, next) => {
+const resetPassword = catchAsync(async (req, res) => {
   const { token } = req.params
   const {
     password,
@@ -80,7 +80,7 @@ const resetPassword = catchAsync(async (req, res, next) => {
     passwordResetTokenExpiresAt: { $gte: Date.now() }
   })
   
-  if (!user) return next(new AppError(400, 'Malformed password reset token.')) 
+  if (!user) throw new AppError(400, 'Malformed password reset token.')
   
   user.password         = password
   user.passwordConfirm  = passwordConfirm
@@ -97,7 +97,7 @@ const resetPassword = catchAsync(async (req, res, next) => {
   })
 })
 
-const updatePassword = catchAsync(async (req, res, next) => {
+const updatePassword = catchAsync(async (req, res) => {
   const { id }    = req.user
   const {
     currentPassword,
@@ -108,7 +108,7 @@ const updatePassword = catchAsync(async (req, res, next) => {
   let user = await authService.findById(id, '+password')
   
   if (!user.isPasswordEqualToHash(currentPassword, user.password)) {
-    return next(new AppError(400, 'Current password is not correct. Please provide correct information.'))
+    throw new AppError(400, 'Current password is not correct. Please provide correct information.')
   }
 
   user.password         = password

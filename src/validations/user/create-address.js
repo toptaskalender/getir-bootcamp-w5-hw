@@ -1,38 +1,38 @@
 const Joi       = require('joi')
 const {
-  createErrors
+  joiErrorHandler
 }               = require('../../utils/functions')
 
 const createAddressValidation = Joi.object({
   label: Joi
     .string()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
   
   street: Joi
     .string()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
   
   city: Joi
     .string()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
   
   province: Joi
     .string()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   zip: Joi
     .number()
     .required()
-    .error(createErrors),
+    .error(joiErrorHandler),
 
   country: Joi
     .string()
     .required()
-    .error(createErrors)
+    .error(joiErrorHandler)
   
 })
   

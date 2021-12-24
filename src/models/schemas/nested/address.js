@@ -1,6 +1,12 @@
 const mongoose = require('mongoose')
 
 const addressSchema = new mongoose.Schema({
+  label: {
+    unique      : true,
+    type        : String,
+    default     : 'Home'
+  },
+
   street: {
     type        : String,
     required    : [true, 'An address must have a street name.']

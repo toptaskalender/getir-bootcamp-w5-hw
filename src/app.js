@@ -3,8 +3,11 @@ const path                            = require('path')
 const morgan                          = require('morgan')
 const { resLogWriteStream }           = require('./logs')
 const {
-  authRouter, usersRouter,
-  productsRouter, categoriesRouter
+  authRouter,
+  usersRouter,
+  productsRouter,
+  categoriesRouter,
+  commentsRouter
 }                                     = require('./routes')
 const { errorHandler, verifyAuth }    = require('./middlewares')
 const { AppError }                    = require('./utils/classes')
@@ -21,6 +24,7 @@ app.use('/api/v1', authRouter)
 app.use('/api/v1/users', verifyAuth, usersRouter)
 app.use('/api/v1/products', productsRouter)
 app.use('/api/v1/categories', categoriesRouter)
+app.use('/api/v1/comments', commentsRouter)
 
 app.all('*', (req, _) => {
   throw new AppError(500, `${req.originalUrl} does not exist on our server.`)

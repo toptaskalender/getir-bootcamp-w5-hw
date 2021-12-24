@@ -24,7 +24,7 @@ const signUp = catchAsync(async (req, res) => {
   })
 })
 
-const logIn = catchAsync(async (req, res) => {
+const logIn = catchAsync(async (req, res, next) => {
   const { email, password } = req.body
 
   const user = await authService.findOne({ email }, '+password')
@@ -48,7 +48,7 @@ const logIn = catchAsync(async (req, res) => {
   })
 })
 
-const sendPasswordResetEmail = catchAsync(async (req, res) => {
+const sendPasswordResetEmail = catchAsync(async (req, res, next) => {
   const { email } = req.body
 
   const user = await authService.findOne({ email })
@@ -66,7 +66,7 @@ const sendPasswordResetEmail = catchAsync(async (req, res) => {
   })
 })
 
-const resetPassword = catchAsync(async (req, res) => {
+const resetPassword = catchAsync(async (req, res, next) => {
   const { token } = req.params
   const {
     password,
@@ -97,7 +97,7 @@ const resetPassword = catchAsync(async (req, res) => {
   })
 })
 
-const updatePassword = catchAsync(async (req, res) => {
+const updatePassword = catchAsync(async (req, res, next) => {
   const { id }    = req.user
   const {
     currentPassword,

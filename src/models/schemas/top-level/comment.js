@@ -13,7 +13,7 @@ const commentSchema = new mongoose.Schema({
   user: {
     type                      : mongoose.Schema.Types.ObjectId,
     ref                       : 'User',
-    required                  : [true, 'A comment must belong to a user.']
+    required                  : [true, 'A comment must belong to an user.']
   },
 
   title: {
@@ -23,7 +23,7 @@ const commentSchema = new mongoose.Schema({
 
   body: {
     type                      : String,
-    maxlength                 : [MAX_COMMENT_CHARACTER, 'A comment must be less than 200 charecter long.'],
+    maxlength                 : [MAX_COMMENT_CHARACTER, `A comment must be less than ${MAX_COMMENT_CHARACTER} charecter long.`],
     required                  : [true, 'A comment must have a body.'] 
   },
 

@@ -28,11 +28,16 @@ const getMe = catchAsync(async (req, res) => {
   })
 })
 
-const createAddress = catchAsync(async (req, res) => {
-  const { id }          = req.user
-  const { body: data }  = req
+const createAddress = catchAsync(async (req, res, next) => {
+  const { id }              = req.user
+  const { body: address }   = req
 
-  const user = await userService.findByIdAndUpdate(id, { $push: { addresses: data } })
+  const user = await userService.findOneAndUpdate(
+    { id, 'addresses.label': { $ne: address.label } },
+    { $addToSet: { addresses: address } }
+  )
+
+  if (!user) return next(new AppError(400, `You have already got an address with the same label name.`))
 
   res.status(200).json({
     status: 'success',

@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 
 const addressSchema = new mongoose.Schema({
   label: {
-    unique      : true,
     type        : String,
     default     : 'Home'
   },

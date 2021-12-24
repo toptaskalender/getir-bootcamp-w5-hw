@@ -24,8 +24,8 @@ const getComments = catchAsync(async (req, res, next) => {
   const { query }       = req
   const features        = new APIFeatures(query)
 
-  const queries             = features.createQuery()
-  queries.filterBy.product  = product
+  const queries = features.createQuery()
+  if (product) queries.filterBy.product  = product
 
   const comments = await commentService.find(queries)
 

@@ -28,7 +28,7 @@ const {
 
 router.param('id', checkId)
 
-router.use('/:id', commentsRouter)
+router.use('/:id/comments', commentsRouter)
 
 router.route('/')
   .get(

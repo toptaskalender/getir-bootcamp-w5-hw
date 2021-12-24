@@ -6,6 +6,7 @@ const {
 const createAddressValidation = Joi.object({
   label: Joi
     .string()
+    .default('Home')
     .required()
     .error(joiErrorHandler),
   

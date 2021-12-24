@@ -18,7 +18,7 @@ const {
 
 router.param('id', checkId)
 
-router.route('/comments')
+router.route('/')
   .get(
     getComments
   )
@@ -28,7 +28,7 @@ router.route('/comments')
     createComment
   )
 
-router.route('/comments/:id')
+router.route('/:id')
   .get(
     getComment
   )

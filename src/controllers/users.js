@@ -78,13 +78,12 @@ const deleteAddress = catchAsync(async (req, res, next) => {
   const { id }            = req.user
   const { id: addressId } = req.params
 
-  const beforeUpdateAddresses = await userService.findById(id)
-  const user                  = await userService.findByIdAndUpdate(id, { $pull: { addresses: { _id: addressId } } })
-  const isAddressesModified   = beforeUpdateAddresses.addresses.length !== user.addresses.length
+  const user = await userService.findOneAndUpdate(
+    { id, 'addresses._id': addressId },
+    { $pull: { addresses: { _id: addressId } } }
+  )
 
-  if (!isAddressesModified) {
-    return next(new AppError(400, 'Cannot find an address with given id.'))
-  }
+  if (!user) return next(new AppError(400, 'Cannot find an address with given id.'))
 
   res.status(200).json({
     status: 'success',
